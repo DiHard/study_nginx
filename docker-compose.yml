@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./lksite:/var/www/lksite
+      - ./mpsite:/var/www/mpsite
+    depends_on:
+      - lksite
+      - mpsite
+
+  lksite:
+    image: nginx:alpine
+    volumes:
+      - ./lksite:/usr/share/nginx/html:ro
+
+  mpsite:
+      image: nginx:alpine
+      volumes:
+       - ./mpsite:/usr/share/nginx/html:ro
